@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   int monthlyStats = 100;
 
   // 控制 Lottie 动画路径
-  String lottiePath = 'lottie/egg.json';
+  String lottiePath = 'assets/lottie/egg.json';
 
   String get timeString {
     final min = (seconds ~/ 60).toString().padLeft(2, '0');
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   void startTimer() {
     setState(() {
       isRunning = true;
-      lottiePath = 'lottie/egg.json'; // 重置动画为鸡蛋
+      lottiePath = 'assets/lottie/egg.json'; // 重置动画为鸡蛋
     });
 
     _timer?.cancel();
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         timer.cancel();
         setState(() {
           isRunning = false;
-          lottiePath = 'lottie/chicken.json';
+          lottiePath = 'assets/lottie/chicken.json';
           seconds = 10; // ⬅️ 恢复初始时间
         });
       }
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       seconds = 10;
       isRunning = false;
-      lottiePath = 'lottie/egg.json';
+      lottiePath = 'assets/lottie/egg.json';
     });
     _timer?.cancel();
   }
@@ -79,44 +79,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            // 顶部栏
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.access_time,
-                        size: 18,
-                        color: Colors.black54,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        '12:30 AM',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.battery_full,
-                        color: Colors.lightBlue,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        '83%',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 24),
 
             // 🥚 Lottie 动画（动态切换）
             Padding(
@@ -134,8 +97,8 @@ class _HomePageState extends State<HomePage> {
 
             // ⏱ 倒计时按钮
             SizedBox(
-              width: 100,
-              height: 100,
+              width: 120,
+              height: 120,
               child: ElevatedButton(
                 onPressed: isRunning ? null : startTimer,
                 style: ElevatedButton.styleFrom(

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -11,12 +10,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int seconds = 10; // 25:00
+  int seconds = 10; // 倒计时秒数
   bool isRunning = false;
   Timer? _timer;
+
   int todayFocus = 5;
   int streakDays = 3;
   int monthlyStats = 100;
+
+  // 控制 Lottie 动画路径
+  String lottiePath = 'lottie/egg.json';
 
   String get timeString {
     final min = (seconds ~/ 60).toString().padLeft(2, '0');
@@ -27,7 +30,9 @@ class _HomePageState extends State<HomePage> {
   void startTimer() {
     setState(() {
       isRunning = true;
+      lottiePath = 'lottie/egg.json'; // 重置动画为鸡蛋
     });
+
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (seconds > 0 && isRunning) {
@@ -38,6 +43,8 @@ class _HomePageState extends State<HomePage> {
         timer.cancel();
         setState(() {
           isRunning = false;
+          lottiePath = 'lottie/chicken.json';
+          seconds = 10; // ⬅️ 恢复初始时间
         });
       }
     });
@@ -52,10 +59,17 @@ class _HomePageState extends State<HomePage> {
 
   void resetTimer() {
     setState(() {
-      seconds = seconds;
+      seconds = 10;
       isRunning = false;
+      lottiePath = 'lottie/egg.json';
     });
     _timer?.cancel();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -79,12 +93,9 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.black54,
                       ),
                       const SizedBox(width: 4),
-                      Text(
+                      const Text(
                         '12:30 AM',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black87,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
                     ],
                   ),
@@ -96,12 +107,9 @@ class _HomePageState extends State<HomePage> {
                         size: 18,
                       ),
                       const SizedBox(width: 4),
-                      Text(
+                      const Text(
                         '83%',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black87,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
                     ],
                   ),
@@ -109,19 +117,22 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 8),
-            // 鸡蛋图标
+
+            // 🥚 Lottie 动画（动态切换）
             Padding(
-              padding: const EdgeInsets.only(right: 50), // 向左偏移 20 像素
+              padding: const EdgeInsets.only(right: 50),
               child: SizedBox(
                 width: 425,
                 height: 400,
                 child: ClipOval(
-                  child: Lottie.asset('lottie/egg.json', fit: BoxFit.fill),
+                  child: Lottie.asset(lottiePath, fit: BoxFit.fill),
                 ),
               ),
             ),
+
             const SizedBox(height: 0),
-            // 开始按钮
+
+            // ⏱ 倒计时按钮
             SizedBox(
               width: 100,
               height: 100,
@@ -134,12 +145,14 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Text(
                   timeString,
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: const TextStyle(fontSize: 20, color: Colors.white),
                 ),
               ),
             ),
+
             const SizedBox(height: 24),
-            // 底部统计
+
+            // 📊 底部统计
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
@@ -161,7 +174,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+
             const Spacer(),
+
             // 底部导航栏
             Container(
               decoration: BoxDecoration(
@@ -186,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                 ],
                 currentIndex: 0,
                 onTap: (index) {
-                  // TODO: 跳转页面
+                  // TODO: 页面跳转逻辑
                 },
                 selectedItemColor: Colors.deepPurple,
                 unselectedItemColor: Colors.grey,

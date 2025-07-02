@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'home_page.dart';
+import 'network_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,25 +63,17 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final INetworkService networkService = HttpNetworkService();
+
   Future<void> login(String username, String password) async {
-    final url = Uri.parse("http://127.0.0.1:8000/login");
-    final response = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"username": username, "password": password}),
-    );
-    if (response.statusCode == 200) {
-      final result = jsonDecode(response.body);
-      print("Login status: \${result['status']}");
-      // 你可以在这里根据 result 做页面跳转或提示
-      if (result['status'] == 'success') {
+    final result = await networkService.login(username, password);
+    if (result != null && result['status'] == 'success') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
-    }
     } else {
-      print("Request failed with status: \${response.statusCode}");
+      print("登录失败");
     }
   }
 

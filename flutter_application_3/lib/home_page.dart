@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'setting.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -140,39 +141,6 @@ class _HomePageState extends State<HomePage> {
 
             const Spacer(),
 
-            // 底部导航栏
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Colors.grey.shade200)),
-              ),
-              child: BottomNavigationBar(
-                items: const [
-                  BottomNavigationBarItem(icon: Icon(Icons.egg), label: '首页'),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.calendar_today),
-                    label: '历史记录',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    label: '设置',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.help_outline),
-                    label: '帮助',
-                  ),
-                ],
-                currentIndex: 0,
-                onTap: (index) {
-                  // TODO: 页面跳转逻辑
-                },
-                selectedItemColor: Colors.deepPurple,
-                unselectedItemColor: Colors.grey,
-                type: BottomNavigationBarType.fixed,
-                elevation: 0,
-                backgroundColor: Colors.white,
-              ),
-            ),
           ],
         ),
       ),

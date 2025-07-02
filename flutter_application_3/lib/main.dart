@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-import 'home_page.dart';
 import 'network_service.dart';
+import 'home_page.dart';
+import 'setting.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (result != null && result['status'] == 'success') {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const MainScaffold()),
       );
     } else {
       print("登录失败");
@@ -228,6 +227,44 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MainScaffold extends StatefulWidget {
+  const MainScaffold({Key? key}) : super(key: key);
+  @override
+  State<MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends State<MainScaffold> {
+  int _currentIndex = 0;
+  final List<Widget> _pages = [
+    HomePage(),
+    // 其他页面，如历史、成就等
+    SettingsPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.egg), label: '首页'),
+          // 其他导航项
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '设置'),
+        ],
       ),
     );
   }

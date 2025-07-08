@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'setting.dart';
 
+
+void main() => runApp(const HomePage());
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 

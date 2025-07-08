@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'network_service.dart';
 import 'home_page.dart';
+import 'home_page2.dart';
 import 'setting.dart';
 
 void main() {
@@ -242,6 +243,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   int _currentIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
+    HomePage2(),
     // 其他页面，如历史、成就等
     SettingsPage(),
   ];
@@ -262,6 +264,7 @@ class _MainScaffoldState extends State<MainScaffold> {
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.egg), label: '首页'),
+          BottomNavigationBarItem(icon: Icon(Icons.video_library), label: '视频'), // 新增的HomePage2导航项
           // 其他导航项
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '设置'),
         ],
